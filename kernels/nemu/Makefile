@@ -13,7 +13,7 @@ all:
 	$(MAKE) save_config
 	$(MAKE) build_am
 	$(MAKE) restore_config
-	$(MAKE) -C $(NEMU_HOME) run IMG=$(NEMU_HOME)/build/$(ISA)-nemu-interpreter-$(ARCH).bin
+	$(MAKE) -C $(NEMU_HOME) run IMG=$(NEMU_HOME)/build/$(ISA)-nemu-interpreter-$(ARCH).bin -b
 
 save_config:
 	$(MAKE) -C $(NEMU_HOME) savedefconfig

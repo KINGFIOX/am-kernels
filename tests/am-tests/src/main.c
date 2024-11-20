@@ -1,18 +1,18 @@
 #include <amtest.h>
 
-void (*entry)() = NULL; // mp entry
+void (*entry)() = NULL;  // mp entry
 
 static const char *tests[256] = {
-  ['h'] = "hello",
-  ['H'] = "display this help message",
-  ['i'] = "interrupt/yield test",
-  ['d'] = "scan devices",
-  ['m'] = "multiprocessor test",
-  ['t'] = "real-time clock test",
-  ['k'] = "readkey test",
-  ['v'] = "display test",
-  ['a'] = "audio test",
-  ['p'] = "x86 virtual memory test",
+    ['h'] = "hello",
+    ['H'] = "display this help message",
+    ['i'] = "interrupt/yield test",
+    ['d'] = "scan devices",
+    ['m'] = "multiprocessor test",
+    ['t'] = "real-time clock test",
+    ['k'] = "readkey test",
+    ['v'] = "display test",
+    ['a'] = "audio test",
+    ['p'] = "x86 virtual memory test",
 };
 
 int main(const char *args) {
