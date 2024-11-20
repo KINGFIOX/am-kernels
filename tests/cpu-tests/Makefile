@@ -1,5 +1,7 @@
 .PHONY: all run gdb clean latest $(ALL)
 
+ARCH = x86-nemu
+
 RESULT = .result
 $(shell > $(RESULT))
 
@@ -24,6 +26,10 @@ Makefile.%: tests/%.c latest
 	-@rm -f Makefile.$*
 
 run: all
+	@cat $(RESULT)
+	@rm $(RESULT)
+
+batch: all
 	@cat $(RESULT)
 	@rm $(RESULT)
 

@@ -3,8 +3,8 @@
 
 int isPrime(int n) {
   int d = 5;
-  if (n % 2 == 0) return n==2;
-  if (n % 3 == 0) return n==3;
+  if (n % 2 == 0) return n == 2;
+  if (n % 3 == 0) return n == 3;
   while (d * d <= n) {
     if (n % d == 0) return 0;
     d += 2;
@@ -16,7 +16,7 @@ int isPrime(int n) {
 
 int main() {
   int i, d, p, r, q = 929;
-  if (!isPrime(q)) return 1; 
+  if (!isPrime(q)) return 1;
   r = q;
   while (r > 0) r <<= 1;
   d = 2 * q + 1;
@@ -26,9 +26,11 @@ int main() {
       if (p < 0) i *= 2;
       if (i > d) i -= d;
     }
-    if (i != 1) d += 2 * q;
-    else break;
-  } while(1);
+    if (i != 1)
+      d += 2 * q;
+    else
+      break;
+  } while (1);
   check(d == 13007);
   return 0;
 }
