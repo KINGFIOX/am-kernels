@@ -15,7 +15,7 @@ static char *format_time(uint64_t us) {
   uint64_t ms = us / 1000;
   us -= ms * 1000;
   assert(us < 1000);
-  int len = sprintf(buf, "%d.000", ms);
+  int len = sprintf(buf, "%lld.000", ms);
   char *p = &buf[len - 1];
   while (us > 0) {
     *(p --) = '0' + us % 10;
@@ -155,13 +155,11 @@ int main(const char *args) {
 // Libraries
 
 void* bench_alloc(size_t size) {
-  size  = (size_t)ROUNDUP(size, 8);
+  size  = (size_t)ROUNDUP(size, 8); // 
   char *old = hbrk;
   hbrk += size;
   assert((uintptr_t)heap.start <= (uintptr_t)hbrk && (uintptr_t)hbrk < (uintptr_t)heap.end);
-  for (uint64_t *p = (uint64_t *)old; p != (uint64_t *)hbrk; p ++) {
-    *p = 0;
-  }
+  for (uint64_t *p = (uint64_t *)old; p != (uint64_t *)hbrk; p ++) { *p = 0; } // bzero
   assert((uintptr_t)hbrk - (uintptr_t)heap.start <= setting->mlim);
   return old;
 }
