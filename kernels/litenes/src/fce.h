@@ -1,12 +1,15 @@
 #ifndef FCE_H
 #define FCE_H
 
-#include "common.h"
+#include <stdint.h>
 
 #define FPS          60
 #define SCR_W       256
 #define SCR_H       240
+// Allow overriding frame skip at build time (e.g. -DFRAME_SKIP=3 on slow targets)
+#ifndef FRAME_SKIP
 #define FRAME_SKIP    1
+#endif
 
 void fce_update_screen();
 int fce_load_rom(char *rom);

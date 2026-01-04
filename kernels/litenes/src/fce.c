@@ -104,11 +104,12 @@ void fce_run() {
   uint32_t last = gtime;
   while(1) {
     wait_for_frame();
+    // Poll keys once per frame instead of every scanline to reduce overhead
+    psg_detect_key();
     int scanlines = 262;
 
     while (scanlines-- > 0) {
       ppu_cycle();
-      psg_detect_key();
     }
 
     nr_draw ++;
