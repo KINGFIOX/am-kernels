@@ -1,10 +1,11 @@
 #include <am.h>
 #include <klib-macros.h>
+#include <klib.h>
 
 #define STACK_SIZE (4096 * 8)
 typedef union {
   uint8_t stack[STACK_SIZE];
-  struct { Context *cp; };
+  struct { Context *cp; }; // context pointer, 这个其实是指向了栈里面(自引用)
 } PCB;
 static PCB pcb[2], pcb_boot, *current = &pcb_boot;
 
