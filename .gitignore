@@ -15,3 +15,4 @@ build/
 !.gitignore
 !.gitmodules
 !riscv-tests-am
+!rt-thread-am
