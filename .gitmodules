@@ -1,0 +1,7 @@
+[submodule "tests/riscv-tests-am"]
+	path = tests/riscv-tests-am
+	url = git@github.com:KINGFIOX/riscv-tests-am.git
+[submodule "kernels/rt-thread-am"]
+	path = kernels/rt-thread-am
+	url = git@github.com:KINGFIOX/rt-thread-am.git
+
