@@ -18,7 +18,16 @@ static const char *tests[256] = {
 int main(const char *args) {
   switch (args[0]) {
     CASE('h', hello);
-    CASE('i', hello_intr, IOE, CTE(simple_trap));
+    case 'i': {
+      void hello_intr();
+      entry = hello_intr;
+      ({ ioe_init(); }), ({
+        Context *simple_trap(Event, Context *);
+        cte_init(simple_trap);
+      });
+      hello_intr();
+      break;
+    };
     CASE('d', devscan, IOE);
     CASE('m', mp_print, MPE);
     CASE('t', rtc_test, IOE);
