@@ -14,4 +14,4 @@ build/
 !LICENSE
 !.gitignore
 !.gitmodules
-!/riscv-tests-am/
+!riscv-tests-am
