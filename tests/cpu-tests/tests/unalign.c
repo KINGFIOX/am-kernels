@@ -1,10 +1,15 @@
+#include "am.h"
 #include "trap.h"
 
 volatile unsigned x = 0xffffffff;
 volatile unsigned char buf[16];
 
-int main() {
+static Context * handler(Event ev, Context * c) {
+    return c;
+}
 
+int main() {
+    cte_init(handler);
 	for(int i = 0; i < 4; i++) {
 		*((volatile unsigned*)(buf + 3)) = 0xaabbccdd;
 
