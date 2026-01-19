@@ -20,7 +20,12 @@ unsigned  lwlr_ans[] = {
 	0xbc025800, 0x7fff4a, 0xcd810080, 0xffffab
 };
 
+static Context * handler(Event ev, Context * c) {
+    return c;
+}
+
 int main() {
+    cte_init(handler);
 	unsigned i;
 
 	for(i = 0; i < LENGTH(mem); i ++) {
