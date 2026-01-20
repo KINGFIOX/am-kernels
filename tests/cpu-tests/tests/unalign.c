@@ -9,7 +9,7 @@ static Context * handler(Event ev, Context * c) {
 }
 
 int main() {
-    cte_init(handler);
+	cte_init(handler);
 	for(int i = 0; i < 4; i++) {
 		*((volatile unsigned*)(buf + 3)) = 0xaabbccdd;
 
