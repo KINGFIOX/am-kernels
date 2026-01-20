@@ -7,7 +7,6 @@ static const char *tests[256] = {
   ['H'] = "display this help message",
   ['i'] = "interrupt/yield test",
   ['d'] = "scan devices",
-  ['m'] = "multiprocessor test",
   ['t'] = "real-time clock test",
   ['k'] = "readkey test",
   ['v'] = "display test",
@@ -30,7 +29,6 @@ int main(const char *args) {
       break;
     };
     CASE('d', devscan, IOE);
-    CASE('m', mp_print, MPE);
     CASE('t', rtc_test, IOE);
     CASE('k', keyboard_test, IOE);
     CASE('v', video_test, IOE);
