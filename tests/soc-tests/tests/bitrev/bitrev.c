@@ -1,6 +1,8 @@
 #include "trap.h"
 #include "spi.h"
 
+#define BITREV_SS (1 << 7)
+
 uint8_t bitrev8(uint8_t x) {
   uint8_t result = 0;
   for (int i = 0; i < 8; i++) {
