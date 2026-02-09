@@ -9,8 +9,9 @@ COLOR_NONE  = \033[0m
 
 SOC_TESTS_ROOT := $(shell pwd)
 
-# 导出 CFLAGS，包含公共头文件目录
-export CFLAGS += -I$(SOC_TESTS_ROOT)/include
+# 导出 INC_PATH，包含公共头文件目录
+# 注意：不能 export CFLAGS，否则 RISC-V 编译标志会传递给 NPC 模拟器的编译过程
+export INC_PATH += $(SOC_TESTS_ROOT)/include
 
 ifdef ALL
   TEST_DIRS := tests/$(ALL)
