@@ -1,6 +1,6 @@
 /*
  * UART Character Test
- * 
+ *
  * This test initializes UART 16550 and sends characters to verify UART output.
  * Based on npc/resource/char-test
  */
@@ -44,24 +44,24 @@ static void uart_init(void) {
   volatile char *ier = (volatile char *)UART_IER;
 
   /* 1. Disable all interrupts */
-  *ier = 0x00;
+  *ier = 0x00; // 1
 
   /* 2. Enable DLAB to set baud rate */
-  *lcr = LCR_DLAB;
-  *dll = 0x01; /* Divisor Latch Low */
-  *dlm = 0x00; /* Divisor Latch High */
+  *lcr = LCR_DLAB; // 3
+  *dll = 0x01; /* Divisor Latch Low */ // 0
+  *dlm = 0x00; /* Divisor Latch High */ // 1
 
   /* 3. Disable DLAB, set data format: 8N1 */
-  *lcr = LCR_8N1;
+  *lcr = LCR_8N1; // 3
 
   /* 4. Enable and reset FIFO */
-  *fcr = FCR_FIFO_ENABLE | FCR_RX_RESET | FCR_TX_RESET;
+  *fcr = FCR_FIFO_ENABLE | FCR_RX_RESET | FCR_TX_RESET; // 2
 }
 
 static void uart_putchar_direct(char c) {
   volatile char *thr = (volatile char *)UART_THR;
-  volatile char *lsr = (volatile char *)UART_LSR;
 
+  volatile char *lsr = (volatile char *)UART_LSR;
   /* Wait for transmit FIFO to have space (THRE=1 means ready to write) */
   while ((*lsr & LSR_THRE) == 0)
     ;
@@ -76,31 +76,27 @@ static void uart_puts(const char *s) {
 }
 
 int main() {
-  printf("=== UART Character Test ===\n");
-  
   /* Initialize UART */
   uart_init();
-  
+
   /* Send test string directly via UART registers */
   uart_puts("Hello from UART 16550!\r\n");
-  
+
   /* Send alphabet */
   uart_puts("Alphabet: ");
   for (char c = 'A'; c <= 'Z'; c++) {
     uart_putchar_direct(c);
   }
   uart_puts("\r\n");
-  
+
   /* Send numbers */
   uart_puts("Numbers: ");
   for (char c = '0'; c <= '9'; c++) {
     uart_putchar_direct(c);
   }
   uart_puts("\r\n");
-  
+
   uart_puts("UART test completed!\r\n");
-  
-  printf("=== UART Test Done ===\n");
-  
+
   return 0;
 }
