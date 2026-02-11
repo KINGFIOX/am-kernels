@@ -1,3 +1,5 @@
+// flash spi, FIXME: 测试样例失效
+
 #include "spi.h"
 #include "trap.h"
 
