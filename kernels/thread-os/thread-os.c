@@ -2,8 +2,6 @@
 #include <klib.h>
 #include <klib-macros.h>
 
-#define MAX_CPU 8
-
 typedef union task {
   struct {
     const char *name;
@@ -14,21 +12,12 @@ typedef union task {
   uint8_t stack[4096 * 3];
 } Task;
 
-Task *currents[MAX_CPU];
-#define current currents[cpu_current()]
-
 // user-defined tasks
-
-int locked = 0;
-void lock()   { while (atomic_xchg(&locked, 1)); }
-void unlock() { atomic_xchg(&locked, 0); }
 
 void func(void *arg) {
   while (1) {
-    lock();
-    printf("Thread-%s on CPU #%d\n", arg, cpu_current());
-    unlock();
-    for (int volatile i = 0; i < 100000; i++) ;
+    printf("%s", (char *)arg);
+    yield();
   }
 }
 
@@ -37,28 +26,19 @@ Task tasks[] = {
   { .name = "B", .entry = func },
   { .name = "C", .entry = func },
   { .name = "D", .entry = func },
-  { .name = "E", .entry = func },
 };
 
 // ------------------
 
-Context *on_interrupt(Event ev, Context *ctx) {
-  extern Task tasks[];
-  if (!current) current = &tasks[0];
-  else          current->context = ctx;
-  do {
-    current = current->next;
-  } while ((current - tasks) % cpu_count() != cpu_current());
-  return current->context;
-}
-
-void mp_entry() {
-  iset(true);
-  yield();
+Context *schedular(Event ev, Context *ctx) {
+  static int i = -1;
+  if (i >= 0) tasks[i].context = ctx; // first come in, skip saving context
+  i = (i + 1) % 4;
+  return tasks[i].context;
 }
 
 int main() {
-  cte_init(on_interrupt);
+  cte_init(schedular);
 
   for (int i = 0; i < LENGTH(tasks); i++) {
     Task *task    = &tasks[i];
@@ -66,5 +46,5 @@ int main() {
     task->context = kcontext(stack, task->entry, (void *)task->name);
     task->next    = &tasks[(i + 1) % LENGTH(tasks)];
   }
-  mpe_init(mp_entry);
+  yield();
 }
