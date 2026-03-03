@@ -22,7 +22,6 @@ void switch_test(void * arg) {
 typedef union task {
   struct {
     const char *name;
-    union task *next;
     void      (*entry)(void *);
     Context    *context;
   };
@@ -64,7 +63,6 @@ int main() {
     Task *task    = &tasks[i];
     Area stack    = (Area) { &task->context + 1, task + 1 };
     task->context = kcontext(stack, task->entry, (void *)task->name);
-    task->next    = &tasks[(i + 1) % LENGTH(tasks)];
   }
   yield();
 }
