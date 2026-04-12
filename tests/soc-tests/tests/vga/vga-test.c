@@ -15,10 +15,10 @@ static void fill_test_pattern() {
   printf("Filling framebuffer (%d x %d)\n", W, H);
 
   for (int x = 0; x < W; x++) {
-    uint32_t color = colors[x / bar_w];
+    uint64_t color = colors[x / bar_w];
     for (int y = 0; y < H; y++) {
-      uint32_t addr = (((uint32_t)x << 10) | (uint32_t)y) + VGA_BASE;
-      volatile uint32_t * vga = (volatile uint32_t *)addr;
+      uint64_t addr = (((uint64_t)x << 10) | (uint64_t)y) + VGA_BASE;
+      volatile uint64_t * vga = (volatile uint64_t *)addr;
       vga[0] = color;
     }
     if (x % 64 == 0) {
