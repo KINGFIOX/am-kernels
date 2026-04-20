@@ -10,7 +10,9 @@
 #include <klib.h>
 #include <klib-macros.h>
 
-#define ITERATIONS 1000
+#ifndef ITERATIONS
+#define ITERATIONS 20  /* reduced for RTL simulation turnaround */
+#endif
 #define MEM_METHOD MEM_STATIC
 
 /************************/
